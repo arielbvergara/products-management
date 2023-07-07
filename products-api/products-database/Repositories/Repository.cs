@@ -17,7 +17,7 @@ public abstract class Repository<T> : IRepository<T> where T : class
 
     internal IQueryable<T> All() => DbSet.AsQueryable();
     
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<ICollection<T>> GetAllAsync()
     {
         return await All().ToListAsync();
     }

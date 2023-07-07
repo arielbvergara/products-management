@@ -1,3 +1,4 @@
+using products.core;
 using products.core.Constants;
 using products.database;
 
@@ -11,7 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDataAccessServices(connectionString);
+builder.Services
+    .AddCoreServices()
+    .AddDataAccessServices(connectionString);
 
 var app = builder.Build();
 

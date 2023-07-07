@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Optional" Version="4.0.0" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\products-api-models\products.models.csproj" />
     <ProjectReference Include="..\products-database\products.database.csproj" />

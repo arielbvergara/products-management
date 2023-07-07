@@ -12,5 +12,11 @@ public class ProductsContext : DbContext
     /// <summary>
     /// DbSet which holds a collection of <see cref="Product"/> entities.
     /// </summary>
-    public DbSet<Product> Products { get; set; }
+    public DbSet<Product>? Products { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Product>()
+            .HasIndex(entity => new { entity.Code }).IsUnique();
+    }
 }

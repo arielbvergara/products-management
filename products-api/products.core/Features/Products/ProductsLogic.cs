@@ -30,11 +30,32 @@ public class ProductsLogic
 
     public async Task<ProductModel> AddProduct(ProductModel productModel)
     {
-        throw new NotImplementedException();
+        var product = await _productsRepository.AddAsync(productModel.ToProduct());
+
+        return product.ToProductModel();
     }
 
     public async Task<ProductModel> UpdateProduct(string code, ProductModel productModel)
     {
-        throw new NotImplementedException();
+        var productToUpdateOption = await _productsRepository.GetByCode(code);
+
+        var productToUpdate = productToUpdateOption.Match(
+            some: product => product,
+            none: () => throw new InvalidOperationException("Product does not exits."));
+
+        productToUpdate.Map(productModel);
+
+        var result = await _productsRepository.UpdateAsync(productToUpdate);
+
+        return result.ToProductModel();
+    }
+
+    public async Task DeleteProduct(string code)
+    {
+        var productToUpdateOption = await _productsRepository.GetByCode(code);
+
+        await productToUpdateOption.Match(
+            some: async product => await _productsRepository.DeleteAsync(product),
+            none: () => throw new InvalidOperationException("Product does not exits."));
     }
 }

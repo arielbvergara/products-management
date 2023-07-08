@@ -1,7 +1,7 @@
-import Image from 'next/image'
-
 export default function Home() {
   return (
-    <>Your content is here</>
+    <div>
+      <h3>Welcome!</h3>
+    </div>
   )
 }

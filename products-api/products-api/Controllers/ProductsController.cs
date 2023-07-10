@@ -19,17 +19,17 @@ public class ProductsController : ControllerBase
     public async Task<ICollection<ProductModel>> GetAllProducts() => await _productsLogic.GetAllProducts();
 
     [HttpGet]
-    [Route("/{code}")]
+    [Route("api/[controller]/{code}")]
     public async Task<ProductModel> GetProduct(string code) => await _productsLogic.GetByCode(code);
 
     [HttpPatch]
-    [Route("/{code}")]
+    [Route("api/[controller]/{code}")]
     public async Task<ProductModel> UpdateProduct(string code, [FromBody] ProductModel productModel) => await _productsLogic.UpdateProduct(code, productModel);
 
     [HttpPost]
     public async Task<ProductModel> CreateProduct([FromBody] ProductModel productModel) => await _productsLogic.AddProduct(productModel);
 
     [HttpDelete]
-    [Route("/{code}")]
+    [Route("api/[controller]/{code}")]
     public async Task DeleteProduct(string code) => await _productsLogic.DeleteProduct(code);
 }

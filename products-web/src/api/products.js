@@ -13,3 +13,13 @@ export async function getAllProducts() {
     throw new Error('Failed to fetch data from the API.');
   }
 }
+
+export async function getProductByCode(code) {
+  try {
+    const response = await api.get(`/api/products/${code}`);
+    return response.data;
+  } catch (error) {
+    // Handle error appropriately
+    throw new Error('Failed to fetch data from the API.');
+  }
+}

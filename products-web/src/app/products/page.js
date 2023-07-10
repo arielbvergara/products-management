@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getAllProducts } from '../../api/products';
+import Loading from '@/components/loading';
 
 function Page() {
   const [data, setData] = useState(null);
@@ -24,7 +25,7 @@ function Page() {
       {data ? (
         <pre>{JSON.stringify(data, null, 2)}</pre>
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </div>
   );

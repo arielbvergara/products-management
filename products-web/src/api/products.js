@@ -23,3 +23,26 @@ export async function getProductByCode(code) {
     throw new Error('Failed to fetch data from the API.');
   }
 }
+
+export async function deleteProductByCode(code) {
+  try {
+    console.log("code to delete", code)
+    const response = await api.delete(`/api/products/${code}`);
+    
+    console.log(response)
+    
+  } catch (error) {
+    // Handle error appropriately
+    throw new Error('Failed to fetch data from the API.');
+  }
+}
+
+export async function editProductByCode(code, product) {
+  try {
+    //TODO: add body to the api call
+    const response = await api.patch(`/api/products/${code}`);
+  } catch (error) {
+    // Handle error appropriately
+    throw new Error('Failed to fetch data from the API.');
+  }
+}

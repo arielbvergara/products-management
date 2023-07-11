@@ -31,5 +31,5 @@ public class ProductsController : ControllerBase
 
     [HttpDelete]
     [Route("{code}")]
-    public async Task DeleteProduct(string code) => await _productsLogic.DeleteProduct(code);
+    public async Task<bool> DeleteProduct(string code) => await _productsLogic.DeleteProduct(code);
 }

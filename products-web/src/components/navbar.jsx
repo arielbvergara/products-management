@@ -1,15 +1,22 @@
-import Link from 'next/link'
-import React from 'react'
+'use client'
 
-export default function Navbar() {
+import React from "react";
+import { Navbar, Text } from "@nextui-org/react";
+
+export default function App() {
   return (
-    <div className='flex justify-between place-items-center h-12'>
-        <Link href='/'>Home</Link>
-        
-        <div className='w-3/12 flex justify-around'>
-            <Link href="/products">Products</Link>
-            <Link href='/users'>Users</Link>
-        </div>
-    </div>
+  <Navbar isBordered variant="floating">
+    <Navbar.Brand>
+      <Text b color="inherit" hideIn="xs">
+        Dustin assesment
+      </Text>
+    </Navbar.Brand>
+    <Navbar.Content hideIn="xs" variant="highlight-rounded">
+      <Navbar.Link href="/products">
+        Products
+      </Navbar.Link>
+      <Navbar.Link href="/users">Users</Navbar.Link>
+    </Navbar.Content>
+  </Navbar>   
   )
 }

@@ -7,13 +7,13 @@ import TableComponent from '@/components/table';
 
 function Page() {
   const [data, setData] = useState(null);
-  const [rows, setRows] = useState([]);
+  
   useEffect(() => {
     const fetchApiData = async () => {
       try {
         const result = await getAllProducts();
         setData(result);
-        setRows(result.map((x) => {
+        setData(result.map((x) => {
           return {
             code: x.code,
             name: x.productName,
@@ -55,7 +55,7 @@ function Page() {
   return (
     <div>
       {data ? (
-        <TableComponent columns={columns} rows={rows} />
+        <TableComponent columns={columns} rows={data} />
       ) : (
         <Loading />
       )}

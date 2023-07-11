@@ -1,29 +1,43 @@
-import { Table, Row, Col, Tooltip, Collapse } from "@nextui-org/react";
+import { deleteProductByCode } from "@/api/products";
+import { Table, Row, Col, Tooltip } from "@nextui-org/react";
+import Link from "next/link";
 
-export default function TableComponent({columns, rows}) {
+export default function TableComponent({columns, rows, actions}) {
+
+  const handleDeleteAsync = async (code) => {
+    console.log("codeeee", code)
+    if (confirm('Are you sure you want to delete this product?')) {
+      // Save it!
+      let response = await deleteProductByCode(code);
+
+      alert(response)
+    } else {
+      // Do nothing!
+      console.log('Thing was not saved to the database.');
+    }
+  }
 
   const renderCell = (product, columnKey) => {
 
     const cellValue = product[columnKey];
-
+    //TODO: Make it more generic
     if (columnKey == "actions"){
       return (
         <Row justify="center" align="center">
           <Col css={{ d: "flex" }}>
             <Tooltip content="Product details">
-              Details
+            <Link href={`/products/details/${product.code}`}>Details</Link>
             </Tooltip>
           </Col>
           <Col css={{ d: "flex" }}>
             <Tooltip content="Edit product">
-              Edit
+              <Link href={`/products/edit/${product.code}`}>Edit</Link>
             </Tooltip>
           </Col>
-          <Col css={{ d: "flex" }}>
+          <Col css={{ d: "flex" }} onClick={async () => await handleDeleteAsync(product.code)}>
             <Tooltip
               content="Delete product"
               color="error"
-              onClick={() => console.log("Delete product", product.code)}
             >
               Delete
             </Tooltip>

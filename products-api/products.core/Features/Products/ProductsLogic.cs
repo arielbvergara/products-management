@@ -50,12 +50,14 @@ public class ProductsLogic
         return result.ToProductModel();
     }
 
-    public async Task DeleteProduct(string code)
+    public async Task<bool> DeleteProduct(string code)
     {
         var productToUpdateOption = await _productsRepository.GetByCode(code);
 
         await productToUpdateOption.Match(
             some: async product => await _productsRepository.DeleteAsync(product),
             none: () => throw new InvalidOperationException("Product does not exits."));
+
+        return true;
     }
 }

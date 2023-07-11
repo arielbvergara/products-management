@@ -17,6 +17,13 @@ export default function page() {
 
   const onSubmit = async () => {
     let response = await addProduct(newProduct);
+
+    if (response){
+      alert("All good!")
+    }
+    else{
+      alert("Something went wrong :(")
+    }
   }
 
   return (

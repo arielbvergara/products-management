@@ -46,7 +46,7 @@ export async function editProductByCode(code, product) {
 
 export async function addProduct(product) {
   try {
-    await api.post(`/api/products`,
+    let response = await api.post(`/api/products`,
     product
     , {
       headers: {
@@ -55,8 +55,9 @@ export async function addProduct(product) {
       },
     });
 
+    return response;
+
   } catch (error) {
-    // Handle error appropriately
-    throw new Error('Failed to fetch data from the API.');
+    return false;
   }
 }

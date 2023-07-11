@@ -22,8 +22,6 @@ public abstract class Repository<T> : IRepository<T> where T : class
         return await All().ToListAsync();
     }
     
-    public async Task<T> GetByIdAsync(int id) => await DbSet.FindAsync(id);
-
     public async Task<T> AddAsync(T entity, bool save = true)
     {
         if (entity == null)
@@ -86,10 +84,5 @@ public abstract class Repository<T> : IRepository<T> where T : class
         {
             throw new Exception($"{nameof(entity)} could not be deleted: {ex.Message}");
         }
-    }
-
-    public async Task SaveChangesAsync()
-    {
-        await _context.SaveChangesAsync();
     }
 }

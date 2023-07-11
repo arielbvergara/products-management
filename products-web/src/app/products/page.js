@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { getAllProducts } from '../../api/products';
 import LoadingComponent from '@/components/loading';
-import TableComponent from '@/components/table';
 import { Button, Input } from '@nextui-org/react';
 import Link from 'next/link';
 import SearchIcon from '@/icons/searchIcon';
+import ProductTableComponent from '@/components/productTable';
 
 
 function Page() {
@@ -105,7 +105,7 @@ function Page() {
           </div>
           
           {
-            <TableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
+            <ProductTableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
           }
         </>
       ) : (

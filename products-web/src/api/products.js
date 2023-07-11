@@ -1,5 +1,4 @@
 import axios from 'axios';
-var FormData = require('form-data');
 
 const api = axios.create({
   baseURL: process.env.API_URL, 

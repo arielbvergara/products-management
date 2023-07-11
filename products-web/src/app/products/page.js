@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getAllProducts } from '../../api/products';
-import Loading from '@/components/loading';
+import LoadingComponent from '@/components/loading';
 import TableComponent from '@/components/table';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
@@ -14,7 +14,6 @@ function Page() {
     const fetchApiData = async () => {
       try {
         const result = await getAllProducts();
-        setData(result);
         setData(result.map((x) => {
           return {
             code: x.code,
@@ -71,7 +70,7 @@ function Page() {
         </>
         
       ) : (
-        <Loading />
+        <LoadingComponent />
       )}
     </>
   );

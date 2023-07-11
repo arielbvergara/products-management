@@ -3,7 +3,11 @@
 export default function Page() {
   return (
     <>
-      <h3>Welcome!</h3>
+      <div className="text-gray-600 text-center">
+        <h4>
+          Welcome!
+        </h4>
+      </div>
     </>
   )
 }

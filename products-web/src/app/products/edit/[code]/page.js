@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getProductByCode } from '../../../../api/products';
-import Loading from '@/components/loading';
+import LoadingComponent from '@/components/loading';
 
 export default function Page({ params }) {
   const [data, setData] = useState(null);
@@ -38,7 +38,7 @@ export default function Page({ params }) {
         </>
         
       ) : (
-        <Loading />
+        <LoadingComponent />
       )}
   </div>
   )

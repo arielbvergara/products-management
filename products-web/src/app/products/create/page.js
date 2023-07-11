@@ -23,7 +23,7 @@ export default function Page() {
   }, [submitted])
   
 
-  const onSubmit = async () => {
+  const onSubmitAsync = async () => {
     setLoading(true);
     if (!(newProduct.code && newProduct.productName && newProduct.brand && newProduct.price)) {
       ToastFail(`There are some fields that need to be completed`).showToast()
@@ -45,18 +45,23 @@ export default function Page() {
   }
 
   const handleInputClass = (propertyValue) => {
-    console.log(propertyValue, submitted)
     return submitted && !propertyValue ? 'border-2 border-rose-600 mb-3': 'mb-3';
+  }
+
+  const handleKeyDownHandlerAsync = async (event) => {
+    if (event.key === 'Enter') {
+      await onSubmitAsync();
+    }
   }
 
   return (
     <Container>
-      <form onSubmit={async () => await onSubmit()}  className='flex flex-col'>
-        <Input label="Code" placeholder="Product code" className={handleInputClass(newProduct.code)} onChange={(e) => setNewProduct({...newProduct, code: e.currentTarget.value})} />
-        <Input label="Name" placeholder="Product name" className={handleInputClass(newProduct.productName)} onChange={(e) => setNewProduct({...newProduct, productName: e.currentTarget.value})}  />
-        <Input label="Brand" placeholder="Product brand" className={handleInputClass(newProduct.brand)} onChange={(e) => setNewProduct({...newProduct, brand: e.currentTarget.value})}  />
-        <Input label="Price" type='number' placeholder="Product price"  className={handleInputClass(newProduct.price)} onChange={(e) => setNewProduct({...newProduct, price: e.currentTarget.value})} />
-        <Button flat color="primary" auto onPress={async () => await onSubmit()}>
+      <form method="post" onSubmit={async () => await onSubmitAsync()}  className='flex flex-col'>
+        <Input label="Code" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} placeholder="Product code" className={handleInputClass(newProduct.code)} onChange={(e) => setNewProduct({...newProduct, code: e.currentTarget.value})} />
+        <Input label="Name" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} placeholder="Product name" className={handleInputClass(newProduct.productName)} onChange={(e) => setNewProduct({...newProduct, productName: e.currentTarget.value})}  />
+        <Input label="Brand" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} placeholder="Product brand" className={handleInputClass(newProduct.brand)} onChange={(e) => setNewProduct({...newProduct, brand: e.currentTarget.value})}  />
+        <Input label="Price" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} type='number' placeholder="Product price"  className={handleInputClass(newProduct.price)} onChange={(e) => setNewProduct({...newProduct, price: e.currentTarget.value})} />
+        <Button flat color="primary" auto onPress={async () => await onSubmitAsync()}>
           { 
             loading ? (<Loading  type="points" color="currentColor" size="sm" />) : ("Create new product")
           }

@@ -56,7 +56,23 @@ function Page() {
 
   return (
     <>
-      <Loading />
+      {data ? (
+        <>
+        <div className='flex mb-3'>
+          
+        <Link href="/products/create" className='ml-auto'> 
+          <Button flat color="primary" auto>
+            Add new product
+          </Button>
+        </Link>
+        </div>
+        
+        <TableComponent columns={columns} rows={data} />
+        </>
+        
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }

@@ -1,18 +1,21 @@
 import { deleteProductByCode } from "@/api/products";
 import { Table, Row, Col, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
+import ToastSuccess, { ToastFail } from "./toasts";
 
-export default function TableComponent({columns, rows, actions}) {
+
+export default function TableComponent({columns, rows, setRows}) {
 
   const handleDeleteAsync = async (code) => {
     if (confirm('Are you sure you want to delete this product?')) {
-      // Save it!
       let response = await deleteProductByCode(code);
-
-      alert(response)
-    } else {
-      // Do nothing!
-      console.log('Thing was not saved to the database.');
+      if(response){
+        setRows(code)
+        ToastSuccess(`Product ${code} was deleted successfully`).showToast();
+      }
+      else{
+        ToastFail(`Product ${code} not deleted.`).showToast()
+      }
     }
   }
 

@@ -8,6 +8,7 @@ import { Button, Input } from '@nextui-org/react';
 import Link from 'next/link';
 import SearchIcon from '@/icons/searchIcon';
 
+
 function Page() {
   const [data, setData] = useState(null);
   const [displayedData, setDisplayedData] = useState(null);
@@ -37,19 +38,22 @@ function Page() {
     };
 
     fetchApiData();
-  }, []);
+  }, [data]);
 
   const handleFilter = (text) => {
-    console.log(text)
-    console.log(data)
       const filteredData = data.filter(x =>
          x.code.includes(text) || 
          x.productName.includes(text) ||
          x.brand.includes(text) 
       );
       
-      console.log(filteredData);
       setDisplayedData(filteredData);
+  }
+
+  const handleDelete = (code) => {
+    const filtered = data.filter(x => x.code != code)
+    setData(filtered); 
+    setDisplayedData(filtered)
   }
 
   const columns = [
@@ -99,17 +103,9 @@ function Page() {
           </div>
           
           {
-            displayedData ? 
-              (
-                <TableComponent columns={columns} rows={displayedData} />
-              ) 
-              : (
-                <TableComponent columns={columns} rows={[]} />
-              )
+            <TableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
           }
-          
         </>
-        
       ) : (
         <LoadingComponent />
       )}

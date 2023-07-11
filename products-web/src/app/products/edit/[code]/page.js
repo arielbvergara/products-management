@@ -1,17 +1,42 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import { getProductByCode } from '../../../../api/products';
+import { editProductByCode, getProductByCode } from '@/api/products';
+import Container from '@/components/container';
 import LoadingComponent from '@/components/loading';
+import ProductForm from '@/components/productForm';
+import { useEffect, useState } from 'react';
 
-export default function Page({ params }) {
+export default function Page({params}) {
+
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchApiData = async () => {
       try {
         const result = await getProductByCode(params.code);
-        setData(result);
+        setData({
+          code: {
+            value: result.code,
+            disabled: true
+          },
+          productName: {
+            value: result.productName,
+            disabled: false
+          },
+          brand:{
+            value: result.brand,
+            disabled: false
+          },
+          currency: {
+            value: result.currency,
+            disabled: true
+          },
+          price:{
+            value: result.price,
+            disabled: false
+          }
+
+        });
       } catch (error) {
         console.error(error);
       }
@@ -20,26 +45,18 @@ export default function Page({ params }) {
     fetchApiData();
   }, []);
 
-  const handleEditProduct = async (code) => {
-    if (confirm('Are you sure you want to delete this product?')) {
-      let response = await deleteProductByCode(code);
-      alert(response)
-    } else {
-      console.log('Thing was not saved to the database.');
-    }
-  }
-
   return (
-    <div>
-      {data ? (
-        <>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-        <button onClick={async () => await handleEditProduct(params.code) }>Edit</button>
-        </>
-        
-      ) : (
-        <LoadingComponent />
-      )}
-  </div>
+    <Container>
+      {
+        data ? 
+        (
+          <ProductForm action={editProductByCode} title={`Edit product '${params.code}'`} buttonText={"Edit product"} existingProduct={data} toastMessage={"modified"} />
+        ):
+        (
+          <LoadingComponent />
+        )
+      }
+      
+    </Container>
   )
 }

@@ -2,20 +2,22 @@ import { deleteProductByCode } from "@/api/products";
 import { Table, Row, Col, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import ToastSuccess, { ToastFail } from "./toasts";
+import ConfirmationModal from "./confirmationModal";
+import { useState } from "react";
 
 
 export default function TableComponent({columns, rows, setRows}) {
 
+  const [code, setCode] = useState(null);
+
   const handleDeleteAsync = async (code) => {
-    if (confirm('Are you sure you want to delete this product?')) {
-      let response = await deleteProductByCode(code);
-      if(response){
-        setRows(code)
-        ToastSuccess(`Product ${code} was deleted successfully`).showToast();
-      }
-      else{
-        ToastFail(`Product ${code} not deleted.`).showToast()
-      }
+    let response = await deleteProductByCode(code);
+    if(response){
+      setRows(code)
+      ToastSuccess(`Product ${code} was deleted successfully`).showToast();
+    }
+    else{
+      ToastFail(`Product ${code} not deleted.`).showToast()
     }
   }
 
@@ -36,7 +38,7 @@ export default function TableComponent({columns, rows, setRows}) {
               </Link>
             </Tooltip>
           </Col>
-          <Col css={{ d: "flex" }} onClick={async () => await handleDeleteAsync(product.code)}>
+          <Col css={{ d: "flex" }} onClick={() => setCode(product.code)}>
             <Tooltip
               content="Delete product"
               color="error"
@@ -57,6 +59,11 @@ export default function TableComponent({columns, rows, setRows}) {
   };
 
   return (
+    <>
+    {
+      code != null ? (<ConfirmationModal action={async () => await handleDeleteAsync(code)} title={`You are about to delete a product with code "${code}", are you sure you wanna continue?`} closeHandler={() => setCode(null)} />) : (<></>)
+    }
+    
     <Table
       aria-label="Example table with custom cells"
       shadow={true}
@@ -87,5 +94,6 @@ export default function TableComponent({columns, rows, setRows}) {
         )}
       </Table.Body>
     </Table>
+    </>
   )
 }

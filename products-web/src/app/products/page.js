@@ -38,7 +38,7 @@ function Page() {
     };
 
     fetchApiData();
-  }, [data]);
+  }, []);
 
   const handleFilter = (text) => {
       const filteredData = data.filter(x =>

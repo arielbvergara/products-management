@@ -27,9 +27,9 @@ export async function getProductByCode(code) {
 export async function deleteProductByCode(code) {
   try {
     const response = await api.delete(`/api/products/${code}`);
+    return response.data
   } catch (error) {
-    // Handle error appropriately
-    throw new Error('Failed to fetch data from the API.');
+    return false;
   }
 }
 

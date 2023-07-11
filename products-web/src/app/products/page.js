@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import { getAllProducts } from '../../api/products';
 import LoadingComponent from '@/components/loading';
-import TableComponent from '@/components/table';
 import { Button, Input } from '@nextui-org/react';
 import Link from 'next/link';
 import SearchIcon from '@/icons/searchIcon';
+import ProductTableComponent from '@/components/productTable';
+
 
 function Page() {
   const [data, setData] = useState(null);
@@ -37,19 +38,22 @@ function Page() {
     };
 
     fetchApiData();
-  }, []);
+  }, [data]);
 
   const handleFilter = (text) => {
-    console.log(text)
-    console.log(data)
       const filteredData = data.filter(x =>
          x.code.includes(text) || 
          x.productName.includes(text) ||
          x.brand.includes(text) 
       );
       
-      console.log(filteredData);
       setDisplayedData(filteredData);
+  }
+
+  const handleDelete = (code) => {
+    const filtered = data.filter(x => x.code != code)
+    setData(filtered); 
+    setDisplayedData(filtered)
   }
 
   const columns = [
@@ -75,6 +79,8 @@ function Page() {
     }
   ];
 
+  
+
   return (
     <>
       {!loading ? (
@@ -99,17 +105,9 @@ function Page() {
           </div>
           
           {
-            displayedData ? 
-              (
-                <TableComponent columns={columns} rows={displayedData} />
-              ) 
-              : (
-                <TableComponent columns={columns} rows={[]} />
-              )
+            <ProductTableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
           }
-          
         </>
-        
       ) : (
         <LoadingComponent />
       )}

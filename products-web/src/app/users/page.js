@@ -1,7 +1,7 @@
+import ComingSoon from "@/components/comingSoon";
+
 export default function page() {
   return (
-    <div>
-        Coming soon!
-    </div>
+    <ComingSoon />
   )
 }

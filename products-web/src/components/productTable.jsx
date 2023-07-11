@@ -15,10 +15,10 @@ export default function ProductTableComponent({columns, rows, setRows}) {
     let response = await deleteProductByCode(code);
     if(response){
       setRows(code)
-      ToastSuccess(`Product ${code} was deleted successfully`).showToast();
+      ToastSuccess(`Product with code '${code}' was deleted successfully`).showToast();
     }
     else{
-      ToastFail(`Product ${code} not deleted.`).showToast()
+      ToastFail(`Product with code '${code}' was not deleted.`).showToast()
     }
   }
 

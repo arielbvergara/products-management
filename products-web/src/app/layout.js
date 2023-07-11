@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <App>
         <body className={inter.className}>
             <Navbar />
-            <div className="flex justify-center place-items-center h-[calc(100vh-3rem)]">
+            <div className="m-60">
               {children}
             </div>
         </body>

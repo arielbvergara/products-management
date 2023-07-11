@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { getAllProducts } from '../../api/products';
 import Loading from '@/components/loading';
 import TableComponent from '@/components/table';
+import { Button } from '@nextui-org/react';
+import Link from 'next/link';
 
 function Page() {
   const [data, setData] = useState(null);
@@ -53,13 +55,25 @@ function Page() {
   ];
 
   return (
-    <div>
+    <>
       {data ? (
+        <>
+        <div className='flex mb-3'>
+          
+        <Link href="/products/create" className='ml-auto'> 
+          <Button flat color="primary" auto>
+            Add new product
+          </Button>
+        </Link>
+        </div>
+        
         <TableComponent columns={columns} rows={data} />
+        </>
+        
       ) : (
         <Loading />
       )}
-    </div>
+    </>
   );
 }
 

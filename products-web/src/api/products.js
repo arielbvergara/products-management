@@ -1,4 +1,5 @@
 import axios from 'axios';
+var FormData = require('form-data');
 
 const api = axios.create({
   baseURL: process.env.API_URL, 
@@ -26,11 +27,7 @@ export async function getProductByCode(code) {
 
 export async function deleteProductByCode(code) {
   try {
-    console.log("code to delete", code)
     const response = await api.delete(`/api/products/${code}`);
-    
-    console.log(response)
-    
   } catch (error) {
     // Handle error appropriately
     throw new Error('Failed to fetch data from the API.');
@@ -41,6 +38,23 @@ export async function editProductByCode(code, product) {
   try {
     //TODO: add body to the api call
     const response = await api.patch(`/api/products/${code}`);
+  } catch (error) {
+    // Handle error appropriately
+    throw new Error('Failed to fetch data from the API.');
+  }
+}
+
+export async function addProduct(product) {
+  try {
+    await api.post(`/api/products`,
+    product
+    , {
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'text/plain'
+      },
+    });
+
   } catch (error) {
     // Handle error appropriately
     throw new Error('Failed to fetch data from the API.');

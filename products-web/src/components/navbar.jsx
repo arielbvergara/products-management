@@ -5,7 +5,7 @@ import { Navbar, Text } from "@nextui-org/react";
 
 export default function App() {
   return (
-  <Navbar isBordered variant="floating">
+  <Navbar isBordered variant="sticky">
     <Navbar.Brand>
       <Text b color="inherit" hideIn="xs">
         Dustin assesment

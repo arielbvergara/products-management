@@ -33,21 +33,11 @@ export async function deleteProductByCode(code) {
   }
 }
 
-export async function editProductByCode(code, product) {
+export async function editProductByCode(product) {
   try {
-    //TODO: add body to the api call
-    const response = await api.patch(`/api/products/${code}`);
-  } catch (error) {
-    // Handle error appropriately
-    throw new Error('Failed to fetch data from the API.');
-  }
-}
-
-export async function addProduct(product) {
-  try {
-    let response = await api.post(`/api/products`,
-    product
-    , {
+    let response = await api.patch(`/api/products/${product.code}`,
+    product, 
+    {
       headers: {
         'Content-Type': 'application/json',
         'accept': 'text/plain'
@@ -58,5 +48,33 @@ export async function addProduct(product) {
 
   } catch (error) {
     return false;
+  }
+}
+
+export async function addProduct(product) {
+  try {
+    let response = await api.post(`/api/products`,
+    product, 
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'text/plain'
+      },
+    });
+
+    return response;
+
+  } catch (error) {
+    return false;
+  }
+}
+
+export function buildProduct(code, productName, brand, price, currency){
+  return {
+    code,
+    productName,
+    brand,
+    price,
+    currency
   }
 }

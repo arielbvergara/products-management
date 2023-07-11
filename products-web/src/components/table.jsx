@@ -7,7 +7,7 @@ export default function TableComponent({columns, rows, renderCell}) {
       aria-label="Example table with custom cells"
       shadow={true}
       css={{
-        height: "auto",
+        height: "150px",
         minWidth: "60%",
       }}
       bordered={false}

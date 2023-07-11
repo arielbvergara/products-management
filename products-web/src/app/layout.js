@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <App>
         <body className={inter.className}>
             <Navbar />
-            <div className="m-60">
+            <div className="container mx-auto mt-10">
               {children}
             </div>
         </body>

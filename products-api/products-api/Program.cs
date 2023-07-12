@@ -6,8 +6,10 @@ using products.database;
 
 var builder = WebApplication.CreateBuilder(args);
 
+const string ApiKeyHeader = "x-api-key";
 var connectionString = builder.Configuration[ConfigurationConstants.DatabaseConnectionString];
 var apiKey = builder.Configuration[ConfigurationConstants.ProductsApiKey];
+var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -41,11 +43,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ApiKeyMiddleware>();
-app.UseCors(builder2 =>
+app.UseCors(corsBuilder =>
 {
-    builder2.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+    if (webClientUrl != null)
+    {
+        corsBuilder.WithOrigins(webClientUrl)
+            .WithHeaders(ApiKeyHeader)
+            .AllowAnyMethod();
+    }
 });
 
 app.UseAuthorization();

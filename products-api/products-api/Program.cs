@@ -6,7 +6,6 @@ using products.database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-const string ApiKeyHeader = "x-api-key";
 var connectionString = builder.Configuration[ConfigurationConstants.DatabaseConnectionString];
 var apiKey = builder.Configuration[ConfigurationConstants.ProductsApiKey];
 var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
@@ -48,7 +47,7 @@ app.UseCors(corsBuilder =>
     if (webClientUrl != null)
     {
         corsBuilder.WithOrigins(webClientUrl)
-            .WithHeaders(ApiKeyHeader)
+            .WithHeaders(ConfigurationConstants.ApiKeyHeader)
             .AllowAnyMethod();
     }
 });

@@ -1,4 +1,6 @@
-﻿namespace products.api.Authentication;
+﻿using products.core.Constants;
+
+namespace products.api.Authentication;
 
 public class ApiKeyMiddleware : IMiddleware
 {
@@ -17,7 +19,7 @@ public class ApiKeyMiddleware : IMiddleware
             return;
         }
 
-        var apiKey = context.Request.Headers["x-api-Key"].ToString();
+        var apiKey = context.Request.Headers[ConfigurationConstants.ApiKeyHeader].ToString();
 
         if (apiKey != _expectedApiKey)
         {

@@ -1,11 +1,11 @@
 'use client'
 
+import SimpleMessageContainer from "./simpleMessageContainer"
+
 export default function SomethingWentWrong() {
   return (
-    <div className="text-gray-600 text-center">
-        <h4>
-          Sorry... Something went wrong...
-        </h4>
-      </div>
+    <SimpleMessageContainer>
+        Sorry... Something went wrong...
+    </SimpleMessageContainer>
   )
 }

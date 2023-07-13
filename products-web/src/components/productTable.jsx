@@ -6,7 +6,6 @@ import ConfirmationModal from "./confirmationModal";
 import { useState } from "react";
 import TableComponent from "./table";
 
-
 export default function ProductTableComponent({columns, rows, setRows}) {
 
   const [selectedCode, setSelectedCode] = useState(null);
@@ -23,7 +22,6 @@ export default function ProductTableComponent({columns, rows, setRows}) {
   }
 
   const renderCell = (product, columnKey) => {
-
     const cellValue = product[columnKey];
     if (columnKey == "actions"){
       return (

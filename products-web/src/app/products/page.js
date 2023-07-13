@@ -7,7 +7,7 @@ import { Button, Input } from '@nextui-org/react';
 import Link from 'next/link';
 import SearchIcon from '@/icons/searchIcon';
 import ProductTableComponent from '@/components/productTable';
-
+import { ToastFail } from '@/components/toasts';
 
 function Page() {
   const [data, setData] = useState(null);
@@ -16,25 +16,25 @@ function Page() {
   
   useEffect(() => {
     const fetchApiData = async () => {
-      try {
-        const result = await getAllProducts();
-        const mapped = result.map((x) => {
-          return {
-            code: x.code,
-            productName: x.productName,
-            brand: x.brand,
-            price: x.price,
-          }
-        })
+      const result = await getAllProducts();
 
-        setData(mapped)
-        setDisplayedData(mapped);
-      } catch (error) {
-        console.error(error);
+      if (!result.success){
+        ToastFail(result.message).showToast()
+        return;
       }
-      finally{
-        setLoading(false);
-      }
+
+      const mapped = result.message.map((x) => {
+        return {
+          code: x.code,
+          productName: x.productName,
+          brand: x.brand,
+          price: x.price,
+        }
+      })
+
+      setData(mapped)
+      setDisplayedData(mapped);
+      setLoading(false);
     };
 
     fetchApiData();

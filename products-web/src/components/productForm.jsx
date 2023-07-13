@@ -3,7 +3,7 @@ import ToastSuccess, { ToastFail } from '@/components/toasts';
 import { Input, Button, Loading  } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
-export default function ProductForm({title, buttonText, action, existingProduct, toastMessage}) {
+export default function ProductForm({title, buttonText, action, existingProduct, successToastMessage}) {
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [product, setNewProduct] = useState(existingProduct ?? {
@@ -37,12 +37,12 @@ export default function ProductForm({title, buttonText, action, existingProduct,
             product.currency.value)
     
         let response = await action(mappedProduct);
-    
-        if (response){
-          ToastSuccess(`Product '${product.productName.value}' was ${toastMessage} successfully`).showToast();
+        
+        if (response.success){
+          ToastSuccess(successToastMessage).showToast();
         }
         else{
-          ToastFail(`Product '${product.productName.value}' was not ${toastMessage}.`).showToast()
+          ToastFail(response.message).showToast()
         }
     
         setLoading(false);

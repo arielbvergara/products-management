@@ -9,7 +9,7 @@ export default function App() {
   <Navbar variant="sticky">
     <Navbar.Brand>
       <Text b color="inherit" >
-        <Link href="/" className="text-slate-600">Dustin assesment</Link>
+        <Link href="/" className="text-slate-600"><i></i>Dustin assessment</Link>
       </Text>
     </Navbar.Brand>
     <Navbar.Content variant="highlight-rounded">

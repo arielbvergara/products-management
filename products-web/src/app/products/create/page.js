@@ -7,7 +7,7 @@ import ProductForm from '@/components/productForm';
 export default function Page() {
   return (
     <Container>
-      <ProductForm action={addProduct} title={"Create new product"} buttonText={"Add new product"} toastMessage={"created"} />
+      <ProductForm action={addProduct} title={"Create new product"} buttonText={"Add new product"} successToastMessage={`Product created successfully`} />
     </Container>
   )
 }

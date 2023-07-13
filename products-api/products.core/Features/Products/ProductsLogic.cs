@@ -1,4 +1,5 @@
-﻿using products.core.Mappers;
+﻿using products.core.Exceptions;
+using products.core.Mappers;
 using products.database.Repositories.Interfaces;
 using products.models;
 
@@ -25,11 +26,18 @@ public class ProductsLogic
 
         return productOption.Match(
             some: product => product.ToProductModel(), 
-            none: () => throw new InvalidOperationException("Product does not exits."));
+            none: () => throw new InvalidOperationException($"Product with code '{code}' does not exits."));
     }
 
     public async Task<ProductModel> AddProduct(ProductModel productModel)
     {
+        var existingProduct = await _productsRepository.GetByCode(productModel.Code);
+
+        if (existingProduct.HasValue)
+        {
+            throw new ExistingEntityException($"Product with code '{productModel.Code}' already exists.");
+        }
+
         var product = await _productsRepository.AddAsync(productModel.ToProduct());
 
         return product.ToProductModel();
@@ -41,7 +49,7 @@ public class ProductsLogic
 
         var productToUpdate = productToUpdateOption.Match(
             some: product => product,
-            none: () => throw new InvalidOperationException("Product does not exits."));
+            none: () => throw new InvalidOperationException($"Product with code '{code}' does not exits."));
 
         productToUpdate.Map(productModel);
 
@@ -56,7 +64,7 @@ public class ProductsLogic
 
         await productToUpdateOption.Match(
             some: async product => await _productsRepository.DeleteAsync(product),
-            none: () => throw new InvalidOperationException("Product does not exits."));
+            none: () => throw new InvalidOperationException($"Product with code '{code}' does not exits."));
 
         return true;
     }

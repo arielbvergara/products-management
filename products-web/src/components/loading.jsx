@@ -1,12 +1,10 @@
 import { Loading } from "@nextui-org/react";
+import SimpleMessageContainer from "./simpleMessageContainer";
 
 export default function LoadingComponent() {
   return (
-    <div className="text-gray-600 text-center">
-      
-      <h4>
+    <SimpleMessageContainer>
         <Loading type="points" />
-      </h4>
-    </div>
+    </SimpleMessageContainer>
   )
 }

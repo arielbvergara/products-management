@@ -3,36 +3,35 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: process.env.API_URL, 
   headers:{
-    'x-api-key': process.env.NEXT_PUBLIC_API_KEY
+    'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
+    'accept': 'application/json'
   }
 });
 
 export async function getAllProducts() {
   try {
     const response = await api.get(`/api/products`);
-    return response.data;
-  } catch (error) {
-    // Handle error appropriately
-    throw new Error('Failed to fetch data from the API.');
+    return buildSuccessResponse(response.data);
+  } catch (exception) {
+    return buildErrorResponse(exception);
   }
 }
 
 export async function getProductByCode(code) {
   try {
     const response = await api.get(`/api/products/${code}`);
-    return response.data;
-  } catch (error) {
-    // Handle error appropriately
-    throw new Error('Failed to fetch data from the API.');
+    return buildSuccessResponse(response.data);
+  } catch (exception) {
+    return buildErrorResponse(exception);
   }
 }
 
 export async function deleteProductByCode(code) {
   try {
     const response = await api.delete(`/api/products/${code}`);
-    return response.data
-  } catch (error) {
-    return false;
+    return buildSuccessResponse(response.data);
+  } catch (exception) {
+    return buildErrorResponse(exception);
   }
 }
 
@@ -43,14 +42,13 @@ export async function editProductByCode(product) {
     {
       headers: {
         'Content-Type': 'application/json',
-        'accept': 'text/plain'
       },
     });
 
-    return response;
+    return buildSuccessResponse(response.data);
 
-  } catch (error) {
-    return false;
+  } catch (exception) {
+    return buildErrorResponse(exception);
   }
 }
 
@@ -61,14 +59,27 @@ export async function addProduct(product) {
     {
       headers: {
         'Content-Type': 'application/json',
-        'accept': 'text/plain'
       },
     });
 
-    return response;
+    return buildSuccessResponse(response.data);
 
-  } catch (error) {
-    return false;
+  } catch (exception) {
+    return buildErrorResponse(exception);
+  }
+}
+
+const buildSuccessResponse = (res) => {
+  return {
+    success: true,
+    message: res
+  }
+}
+
+const buildErrorResponse = (exception) => {
+  return {
+    success: false,
+    message: exception.response.data.error
   }
 }
 

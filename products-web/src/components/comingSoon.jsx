@@ -1,10 +1,10 @@
+import SimpleMessageContainer from "./simpleMessageContainer";
+
 export default function ComingSoon() {
     return (
-      <div className="text-gray-600 text-center">
-        <h4>
+      <SimpleMessageContainer>
           Coming soon!
-        </h4>
-      </div>
+      </SimpleMessageContainer>
     )
   }
   

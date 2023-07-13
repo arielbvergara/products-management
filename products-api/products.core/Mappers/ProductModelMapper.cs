@@ -3,9 +3,9 @@ using products.models;
 
 namespace products.core.Mappers;
 
-internal static class ProductModelMapper
+public static class ProductModelMapper
 {
-    internal static Product ToProduct(this ProductModel productModel) =>
+    public static Product ToProduct(this ProductModel productModel) =>
         new()
         {
             Name = productModel.ProductName,

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics;
 using products.api.Authentication;
 using products.core;
 using products.core.Constants;
@@ -47,10 +48,19 @@ app.UseCors(corsBuilder =>
     if (webClientUrl != null)
     {
         corsBuilder.WithOrigins(webClientUrl)
-            .WithHeaders(ConfigurationConstants.ApiKeyHeader)
+            .WithHeaders(ConfigurationConstants.ApiKeyHeader, "Content-Type", "Accept")
             .AllowAnyMethod();
     }
 });
+
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exception = context.Features
+        .Get<IExceptionHandlerPathFeature>()
+        .Error;
+    var response = new { error = exception.Message };
+    await context.Response.WriteAsJsonAsync(response);
+}));
 
 app.UseAuthorization();
 

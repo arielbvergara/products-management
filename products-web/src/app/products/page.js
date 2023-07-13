@@ -7,7 +7,8 @@ import { Button, Input } from '@nextui-org/react';
 import Link from 'next/link';
 import SearchIcon from '@/icons/searchIcon';
 import ProductTableComponent from '@/components/productTable';
-
+import { ToastFail } from '@/components/toasts';
+import SomethingWentWrong from '@/components/somethingWentWrong';
 
 function Page() {
   const [data, setData] = useState(null);
@@ -16,25 +17,26 @@ function Page() {
   
   useEffect(() => {
     const fetchApiData = async () => {
-      try {
-        const result = await getAllProducts();
-        const mapped = result.map((x) => {
-          return {
-            code: x.code,
-            productName: x.productName,
-            brand: x.brand,
-            price: x.price,
-          }
-        })
+      const result = await getAllProducts();
 
-        setData(mapped)
-        setDisplayedData(mapped);
-      } catch (error) {
-        console.error(error);
-      }
-      finally{
+      if (!result.success){
+        ToastFail(result.message).showToast()
         setLoading(false);
+        return;
       }
+
+      const mapped = result.message.map((x) => {
+        return {
+          code: x.code,
+          productName: x.productName,
+          brand: x.brand,
+          price: x.price,
+        }
+      })
+
+      setData(mapped)
+      setDisplayedData(mapped);
+      setLoading(false);
     };
 
     fetchApiData();
@@ -42,9 +44,9 @@ function Page() {
 
   const handleFilter = (text) => {
       const filteredData = data.filter(x =>
-         x.code.includes(text) || 
-         x.productName.includes(text) ||
-         x.brand.includes(text) 
+         x.code.toLowerCase().includes(text.toLowerCase()) || 
+         x.productName.toLowerCase().includes(text.toLowerCase()) ||
+         x.brand.toLowerCase().includes(text.toLowerCase()) 
       );
       
       setDisplayedData(filteredData);
@@ -77,37 +79,42 @@ function Page() {
       name: "ACTIONS",
       uid: "actions",
     }
-  ];
-
-  
+  ];  
 
   return (
     <>
       {!loading ? (
-        <>
-          <div className='flex mb-3'>
-            <Input  
-            aria-label="search product"
-            fullWidth='true' 
-            type='search' 
-            placeholder="Search product"  
-            className='mr-3' 
-            contentRight={
-                <SearchIcon />
-            }
-            onChange={(e) => handleFilter(e.currentTarget.value)} />
 
-            <Link href="/products/create" className='ml-5'> 
-              <Button flat color="primary" auto>
-                Add product
-              </Button>
-            </Link>
-          </div>
-          
-          {
-            <ProductTableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
-          }
-        </>
+        data ? (
+          <>
+            <div className='flex mb-3'>
+              <Input  
+              aria-label="search product"
+              fullWidth='true' 
+              type='search' 
+              placeholder="Search product"  
+              className='mr-3' 
+              contentRight={
+                  <SearchIcon />
+              }
+              onChange={(e) => handleFilter(e.currentTarget.value)} />
+
+              <Link href="/products/create" className='ml-5'> 
+                <Button flat color="primary" auto>
+                  Add product
+                </Button>
+              </Link>
+            </div>
+            
+            {
+              <ProductTableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
+            }
+          </>
+        ) :
+        (
+          <SomethingWentWrong />
+        )
+        
       ) : (
         <LoadingComponent />
       )}

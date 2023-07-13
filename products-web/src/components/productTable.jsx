@@ -6,24 +6,22 @@ import ConfirmationModal from "./confirmationModal";
 import { useState } from "react";
 import TableComponent from "./table";
 
-
 export default function ProductTableComponent({columns, rows, setRows}) {
 
   const [selectedCode, setSelectedCode] = useState(null);
 
   const handleDeleteAsync = async (code) => {
     let response = await deleteProductByCode(code);
-    if(response){
+    if(response.success){
       setRows(code)
       ToastSuccess(`Product with code '${code}' was deleted successfully`).showToast();
     }
     else{
-      ToastFail(`Product with code '${code}' was not deleted.`).showToast()
+      ToastFail(response.message).showToast()
     }
   }
 
   const renderCell = (product, columnKey) => {
-
     const cellValue = product[columnKey];
     if (columnKey == "actions"){
       return (

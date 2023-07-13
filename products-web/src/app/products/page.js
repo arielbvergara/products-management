@@ -42,9 +42,9 @@ function Page() {
 
   const handleFilter = (text) => {
       const filteredData = data.filter(x =>
-         x.code.includes(text) || 
-         x.productName.includes(text) ||
-         x.brand.includes(text) 
+         x.code.toLowerCase().includes(text.toLowerCase()) || 
+         x.productName.toLowerCase().includes(text.toLowerCase()) ||
+         x.brand.toLowerCase().includes(text.toLowerCase()) 
       );
       
       setDisplayedData(filteredData);
@@ -77,9 +77,7 @@ function Page() {
       name: "ACTIONS",
       uid: "actions",
     }
-  ];
-
-  
+  ];  
 
   return (
     <>

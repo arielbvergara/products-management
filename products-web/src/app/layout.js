@@ -3,7 +3,7 @@
 import Navbar from '@/components/navbar'
 import './globals.css'
 import { Inter } from 'next/font/google'
-import App from './_app'
+import { NextUIProvider, CssBaseline } from '@nextui-org/react';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,13 +15,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {CssBaseline.flush()}
+      </head>
       <body className={inter.className}>
-        <App>
+        <NextUIProvider>
           <Navbar />
           <div className="container mx-auto mt-10">
             {children}
           </div>
-        </App>
+        </NextUIProvider>
       </body>
     </html>
   )

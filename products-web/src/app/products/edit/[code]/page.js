@@ -3,8 +3,8 @@
 import { editProductByCode, getProductByCode } from '@/api/products';
 import Container from '@/components/container';
 import LoadingComponent from '@/components/loading';
-import NoData from '@/components/noData';
 import ProductForm from '@/components/productForm';
+import SomethingWentWrong from '@/components/somethingWentWrong';
 import { ToastFail } from '@/components/toasts';
 import { useEffect, useState } from 'react';
 
@@ -66,7 +66,7 @@ export default function Page({params}) {
             </Container>
           ):
           (
-            <NoData />
+            <SomethingWentWrong />
           )
         )
       }

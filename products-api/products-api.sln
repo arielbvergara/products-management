@@ -3,13 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "products.api", "products-api\products.api.csproj", "{ED2425BC-A9B1-4881-ACFA-FFFE739D161D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "products.api", "products-api\products.api.csproj", "{ED2425BC-A9B1-4881-ACFA-FFFE739D161D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "products.database", "products-database\products.database.csproj", "{D4BABA88-4C79-430D-9518-15128ADCE9A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "products.database", "products-database\products.database.csproj", "{D4BABA88-4C79-430D-9518-15128ADCE9A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "products.models", "products-api-models\products.models.csproj", "{180528F9-1789-4DC2-ACEB-DA39F1DFC32C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "products.models", "products-api-models\products.models.csproj", "{180528F9-1789-4DC2-ACEB-DA39F1DFC32C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "products.core", "products.core\products.core.csproj", "{ADED0A01-24BF-4BC4-BC0D-1724D8976779}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "products.core", "products.core\products.core.csproj", "{ADED0A01-24BF-4BC4-BC0D-1724D8976779}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{D95031EE-523E-498F-A514-3C16A90B2252}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{BEC29610-EC4B-458F-928F-6EC0F903788F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7555378-4E61-4849-B9F6-4F3E828E99AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "Core.Tests\Core.Tests.csproj", "{1F86CC56-0512-4355-8E17-026F7FC5CB6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +41,20 @@ Global
 		{ADED0A01-24BF-4BC4-BC0D-1724D8976779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADED0A01-24BF-4BC4-BC0D-1724D8976779}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADED0A01-24BF-4BC4-BC0D-1724D8976779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F86CC56-0512-4355-8E17-026F7FC5CB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F86CC56-0512-4355-8E17-026F7FC5CB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F86CC56-0512-4355-8E17-026F7FC5CB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F86CC56-0512-4355-8E17-026F7FC5CB6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED2425BC-A9B1-4881-ACFA-FFFE739D161D} = {D95031EE-523E-498F-A514-3C16A90B2252}
+		{D4BABA88-4C79-430D-9518-15128ADCE9A5} = {BEC29610-EC4B-458F-928F-6EC0F903788F}
+		{180528F9-1789-4DC2-ACEB-DA39F1DFC32C} = {BEC29610-EC4B-458F-928F-6EC0F903788F}
+		{ADED0A01-24BF-4BC4-BC0D-1724D8976779} = {BEC29610-EC4B-458F-928F-6EC0F903788F}
+		{1F86CC56-0512-4355-8E17-026F7FC5CB6B} = {D7555378-4E61-4849-B9F6-4F3E828E99AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B388DD8-AAD5-4603-A618-319C26D515E8}

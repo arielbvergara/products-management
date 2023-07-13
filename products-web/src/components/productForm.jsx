@@ -30,13 +30,13 @@ export default function ProductForm({title, buttonText, action, existingProduct,
           return;
         }
 
-        let aux = buildProduct(product.code.value, 
+        let mappedProduct = buildProduct(product.code.value, 
             product.productName.value,
             product.brand.value,
             product.price.value,
             product.currency.value)
     
-        let response = await action(aux);
+        let response = await action(mappedProduct);
     
         if (response){
           ToastSuccess(`Product '${product.productName.value}' was ${toastMessage} successfully`).showToast();

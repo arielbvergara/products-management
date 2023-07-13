@@ -47,7 +47,7 @@ app.UseCors(corsBuilder =>
     if (webClientUrl != null)
     {
         corsBuilder.WithOrigins(webClientUrl)
-            .WithHeaders(ConfigurationConstants.ApiKeyHeader)
+            .WithHeaders(ConfigurationConstants.ApiKeyHeader, "Content-Type", "Accept")
             .AllowAnyMethod();
     }
 });

@@ -3,7 +3,8 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: process.env.API_URL, 
   headers:{
-    'x-api-key': process.env.NEXT_PUBLIC_API_KEY
+    'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
+    'accept': 'application/json'
   }
 });
 
@@ -43,7 +44,6 @@ export async function editProductByCode(product) {
     {
       headers: {
         'Content-Type': 'application/json',
-        'accept': 'text/plain'
       },
     });
 
@@ -61,7 +61,6 @@ export async function addProduct(product) {
     {
       headers: {
         'Content-Type': 'application/json',
-        'accept': 'text/plain'
       },
     });
 

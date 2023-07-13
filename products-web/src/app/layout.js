@@ -1,3 +1,5 @@
+'use client'
+
 import Navbar from '@/components/navbar'
 import './globals.css'
 import { Inter } from 'next/font/google'
@@ -13,14 +15,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <App>
-        <body className={inter.className}>
-            <Navbar />
-            <div className="container mx-auto mt-10">
-              {children}
-            </div>
-        </body>
-      </App>
+      <body className={inter.className}>
+        <App>
+          <Navbar />
+          <div className="container mx-auto mt-10">
+            {children}
+          </div>
+        </App>
+      </body>
     </html>
   )
 }

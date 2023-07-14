@@ -32,3 +32,6 @@ msbuild.wrn
 .vs/
 
 .env
+/products-api/products-api/.config/dotnet-tools.json
+/products-api/products-api/Properties/PublishProfiles/products-app-api - Zip Deploy.pubxml
+/products-api/products-api/Properties

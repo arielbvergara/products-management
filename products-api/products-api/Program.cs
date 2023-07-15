@@ -4,11 +4,9 @@ using products.api.Authentication;
 using products.core.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
-
 builder.AddApiServices();
 
+var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

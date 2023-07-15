@@ -1,36 +1,13 @@
 using Microsoft.AspNetCore.Diagnostics;
+using products.api;
 using products.api.Authentication;
-using products.core;
 using products.core.Constants;
-using products.core.Exceptions;
-using products.database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration[ConfigurationConstants.DatabaseConnectionString];
-var apiKey = builder.Configuration[ConfigurationConstants.ProductsApiKey];
 var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
 
-// Add services to the container.
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ApiKeyMiddleware>(_ =>
-{
-    if (apiKey == null)
-    {
-        throw new MissingApiKeyException("Api key is required to be set in the settings.");
-    }
-
-    return new(apiKey);
-});
-
-builder.Services
-    .AddCoreServices()
-    .AddDataAccessServices(connectionString);
-
-builder.Services.AddCors();
+builder.AddApiServices();
 
 var app = builder.Build();
 

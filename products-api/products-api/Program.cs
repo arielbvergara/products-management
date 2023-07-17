@@ -2,14 +2,18 @@ using Microsoft.AspNetCore.Diagnostics;
 using products.api;
 using products.api.Authentication;
 using products.core.Constants;
+using products.api.Configurations.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddKeyVault();
+builder.AddApplicationInsights();
 builder.AddApiServices();
 
-var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,8 +36,8 @@ app.UseExceptionHandler(c => c.Run(async context =>
 {
     var exception = context.Features
         .Get<IExceptionHandlerPathFeature>()
-        .Error;
-    var response = new { error = exception.Message };
+        ?.Error;
+    var response = new { error = exception?.Message };
     await context.Response.WriteAsJsonAsync(response);
 }));
 

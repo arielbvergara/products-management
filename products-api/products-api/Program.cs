@@ -1,40 +1,19 @@
 using Microsoft.AspNetCore.Diagnostics;
+using products.api;
 using products.api.Authentication;
-using products.core;
 using products.core.Constants;
-using products.core.Exceptions;
-using products.database;
+using products.api.Configurations.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration[ConfigurationConstants.DatabaseConnectionString];
-var apiKey = builder.Configuration[ConfigurationConstants.ProductsApiKey];
-var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
-
-// Add services to the container.
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ApiKeyMiddleware>(_ =>
-{
-    if (apiKey == null)
-    {
-        throw new MissingApiKeyException("Api key is required to be set in the settings.");
-    }
-
-    return new(apiKey);
-});
-
-builder.Services
-    .AddCoreServices()
-    .AddDataAccessServices(connectionString);
-
-builder.Services.AddCors();
+builder.AddKeyVault();
+builder.AddApplicationInsights();
+builder.AddApiServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+var webClientUrl = builder.Configuration[ConfigurationConstants.WebClientUrl];
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -57,8 +36,8 @@ app.UseExceptionHandler(c => c.Run(async context =>
 {
     var exception = context.Features
         .Get<IExceptionHandlerPathFeature>()
-        .Error;
-    var response = new { error = exception.Message };
+        ?.Error;
+    var response = new { error = exception?.Message };
     await context.Response.WriteAsJsonAsync(response);
 }));
 

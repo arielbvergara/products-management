@@ -10,8 +10,6 @@ const api = axios.create({
 
 export async function getAllProducts() {
   try {
-    console.log(process.env.NEXT_PUBLIC_API_URL)
-    console.log(process.env.NEXT_PUBLIC_API_KEY)
     const response = await api.get(`/api/products`);
     return buildSuccessResponse(response.data);
   } catch (exception) {

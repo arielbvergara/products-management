@@ -4,7 +4,7 @@ import { editProductByCode, getProductByCode } from '@/api/products';
 import Container from '@/components/container';
 import LoadingComponent from '@/components/loading';
 import ToastSuccess, { ToastFail } from '@/components/toasts';
-import { Button, Input, Loading, StyledContainer } from '@nextui-org/react';
+import { Button, Input, Loading } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
 export default function Page({params}) {

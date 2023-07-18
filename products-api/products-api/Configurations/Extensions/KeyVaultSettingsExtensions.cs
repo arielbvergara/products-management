@@ -7,7 +7,12 @@ public static class KeyVaultSettingsExtensions
 {
     public static void AddKeyVault(this WebApplicationBuilder builder)
     {
-        var keyVaultSettings = builder.Configuration.GetOrThrow(ConfigurationConstants.KeyVaultUri);
+        var keyVaultSettings = builder.Configuration[ConfigurationConstants.KeyVaultUri];
+
+        if (keyVaultSettings == null)
+        {
+            return;
+        }
 
         builder.Configuration.AddAzureKeyVault(
             new Uri(keyVaultSettings),

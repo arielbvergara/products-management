@@ -81,45 +81,41 @@ function Page() {
     }
   ];  
 
-  return (
-    <>
-      {!loading ? (
+  const handleRender = () => {
+      if(loading){
+        return <LoadingComponent />
+      }
 
-        data ? (
-          <>
-            <div className='flex mb-3'>
-              <Input  
-              aria-label="search product"
-              fullWidth='true' 
-              type='search' 
-              placeholder="Search product"  
-              className='mr-3' 
-              contentRight={
-                  <SearchIcon />
-              }
-              onChange={(e) => handleFilter(e.currentTarget.value)} />
+      if(!loading && !data){
+        return <SomethingWentWrong />
+      }
 
-              <Link href="/products/create" className='ml-5'> 
-                <Button flat color="primary" auto>
-                  Add product
-                </Button>
-              </Link>
-            </div>
-            
-            {
-              <ProductTableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
+      return (
+        <>
+          <div className='flex mb-3'>
+            <Input  
+            aria-label="search product"
+            fullWidth='true' 
+            type='search' 
+            placeholder="Search product"  
+            className='mr-3' 
+            contentRight={
+                <SearchIcon />
             }
-          </>
-        ) :
-        (
-          <SomethingWentWrong />
-        )
-        
-      ) : (
-        <LoadingComponent />
-      )}
-    </>
-  );
+            onChange={(e) => handleFilter(e.currentTarget.value)} />
+
+            <Link href="/products/create" className='ml-5'> 
+              <Button flat color="primary" auto>
+                Add product
+              </Button>
+            </Link>
+          </div>
+          <ProductTableComponent columns={columns} rows={displayedData} setRows={(e) => handleDelete(e)} />
+        </>
+      )
+  }
+
+  return handleRender();
 }
 
 export default Page;

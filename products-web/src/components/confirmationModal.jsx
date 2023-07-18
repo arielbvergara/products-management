@@ -1,6 +1,6 @@
 import { Modal, Button, Text } from "@nextui-org/react";
 
-export default function ConfirmationModal({title, action, closeHandler}) {
+export default function ConfirmationModal({title, visible, action, closeHandler}) {
   const actionHandler = () => {
     action();
     closeHandler();
@@ -9,10 +9,10 @@ export default function ConfirmationModal({title, action, closeHandler}) {
   return (
     <div>
       <Modal
+        open={visible}
         closeButton
         preventClose
         aria-labelledby="modal-title"
-        open={true}
         onClose={() => closeHandler()}
       >
         <Modal.Header>

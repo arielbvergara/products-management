@@ -9,6 +9,10 @@ import TableComponent from "./table";
 export default function ProductTableComponent({columns, rows, setRows}) {
 
   const [selectedCode, setSelectedCode] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+ 
+  const openModalHandler = () => setModalVisible(true);
+  const closeModalHandler = () => setModalVisible(false);
 
   const handleDeleteAsync = async (code) => {
     let response = await deleteProductByCode(code);
@@ -19,6 +23,13 @@ export default function ProductTableComponent({columns, rows, setRows}) {
     else{
       ToastFail(response.message).showToast()
     }
+
+    closeModalHandler();
+  }
+
+  const handleClickDeleteButton = (productCode) => {
+    setSelectedCode(productCode);
+    openModalHandler();
   }
 
   const renderCell = (product, columnKey) => {
@@ -36,7 +47,7 @@ export default function ProductTableComponent({columns, rows, setRows}) {
               </Link>
             </Tooltip>
           </Col>
-          <Col css={{ d: "flex" }} onClick={() => setSelectedCode(product.code)}>
+          <Col css={{ d: "flex" }} onClick={() => handleClickDeleteButton(product.code)}>
             <Tooltip
               content="Delete product"
               color="error"
@@ -58,9 +69,7 @@ export default function ProductTableComponent({columns, rows, setRows}) {
 
   return (
     <>
-        {
-            selectedCode != null ? (<ConfirmationModal action={async () => await handleDeleteAsync(selectedCode)} title={`You are about to delete a product with code "${selectedCode}", are you sure you wanna continue?`} closeHandler={() => setSelectedCode(null)} />) : (<></>)
-        }
+        <ConfirmationModal action={async () => await handleDeleteAsync(selectedCode)} visible={modalVisible} title={`You are about to delete a product with code "${selectedCode}", are you sure you wanna continue?`} closeHandler={() => closeModalHandler()} />
         <TableComponent columns={columns} rows={rows} renderCell={renderCell}/>
     </>
   )

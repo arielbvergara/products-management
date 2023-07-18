@@ -38,7 +38,7 @@ export default function Page({params}) {
     let response = await editProductByCode(data);
     
     if (response.success){
-      ToastSuccess(`Product '${data.code}' edited successfully`).showToast();
+      ToastSuccess(`Product '${data.code}' was edited successfully`).showToast();
     }
     else{
       ToastFail(response.message).showToast()
@@ -64,7 +64,7 @@ export default function Page({params}) {
         <form method="post" onSubmit={async () => await onSubmitAsync()}  className='flex flex-col'>
             <h4>Edit product '{data.code}'</h4>
             <Input label="Code" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} placeholder="Product code" className={handleInputClass(data.code)} onChange={(e) => setData({...data, code: e.currentTarget.value})} value={data.code} disabled />
-            <Input label="Name" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} placeholder="Product name" className={handleInputClass(data.productName)} onChange={(e) => setData({...data, productName: e.currentTarget.value })}  value={data.productName} />
+            <Input autoFocus label="Name" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} placeholder="Product name" className={handleInputClass(data.productName)} onChange={(e) => setData({...data, productName: e.currentTarget.value })}  value={data.productName} />
             <Input label="Brand" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} placeholder="Product brand" className={handleInputClass(data.brand)} onChange={(e) => setData({...data, brand: e.currentTarget.value})} value={data.brand}/>
             <Input label="Price" onKeyDown={async (e) => await handleKeyDownHandlerAsync(e)} type='number' placeholder="Product price"  className={handleInputClass(data.price)} onChange={(e) => setData({...data, price: e.currentTarget.value })} value={data.price} />
             <Button flat color="primary" auto onPress={async () => await onSubmitAsync()}>

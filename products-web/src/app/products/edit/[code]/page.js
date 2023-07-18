@@ -2,15 +2,12 @@
 
 import { editProductByCode, getProductByCode } from '@/api/products';
 import Container from '@/components/container';
-import LoadingComponent from '@/components/loading';
 import ProductForm from '@/components/productForm';
-import SomethingWentWrong from '@/components/somethingWentWrong';
 import { ToastFail } from '@/components/toasts';
 import { useEffect, useState } from 'react';
 
 export default function Page({params}) {
   
-  const [loading, setLoading] = useState(true)
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -19,7 +16,6 @@ export default function Page({params}) {
 
       if (!result.success){
         ToastFail(result.message).showToast()
-        setLoading(false);
         return;
       }
 
@@ -45,32 +41,14 @@ export default function Page({params}) {
           disabled: false
         }
       });
-      setLoading(false);
     };
 
     fetchApiData();
   }, []);
 
   return (
-    <>
-      {
-        loading ? 
-        (
-          <LoadingComponent />
-        ):
-        (
-          data ? 
-          (
-            <Container>
-              <ProductForm action={editProductByCode} title={`Edit product '${params.code}'`} buttonText={"Edit product"} existingProduct={data} successToastMessage={"Product modified successfully"} />
-            </Container>
-          ):
-          (
-            <SomethingWentWrong />
-          )
-        )
-      }
-    </>
-    
+    <Container>
+      <ProductForm action={editProductByCode} title={`Edit product '${params.code}'`} buttonText={"Edit product"} existingProduct={data} successToastMessage={"Product modified successfully"} />
+    </Container>
   )
 }

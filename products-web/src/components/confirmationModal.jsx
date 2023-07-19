@@ -11,7 +11,6 @@ export default function ConfirmationModal({title, visible, action, closeHandler}
       <Modal
         open={visible}
         closeButton
-        preventClose
         aria-labelledby="modal-title"
         onClose={() => closeHandler()}
       >
